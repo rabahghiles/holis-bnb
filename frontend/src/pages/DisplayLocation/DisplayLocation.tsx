@@ -11,6 +11,8 @@ const DisplayLocationPage: React.FC<DisplayLocationPageProps> = () => {
     <div className="display-location">
       {/* image */}
 
+      <h2>HELLO</h2>
+
       <div className="display-location__content">
         {/* title */}
         {/* property type */}
