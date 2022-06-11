@@ -25,16 +25,16 @@
   flex: 1;
   align-items: center;
   max-width: fit-content;
-  padding: 10px;
-  height: 30px;
   border: 1px solid lightgray;
   border-radius: 999px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  padding-right: 6px;
 }
 
 .header__center > input {
   border: none;
-  padding: 10px;
+  padding: 12px;
   width: 250px;
   outline-width: 0;
   font-size: 14px;

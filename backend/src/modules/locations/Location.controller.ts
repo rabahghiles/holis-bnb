@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { LocationService } from './Location.service';
 
 @Controller('locations')
@@ -9,5 +9,10 @@ export class LocationController {
   @Get()
   async getLocations() {
     return await this.locationService.getLocations();
+  }
+
+  @Get(':id')
+  async getLocation(@Param('id') id) {
+    return await this.locationService.getLocation(id);
   }
 }
