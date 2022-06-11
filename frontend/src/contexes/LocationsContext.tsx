@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-export type locationType = {
+export type LocationType = {
   id: number;
   title: string;
   description: string;
@@ -11,9 +11,9 @@ export type locationType = {
   categoryId: number;
 };
 type LocationsContextStateType = {
-  locations: locationType[];
-  setLocations: (locations: locationType[]) => void;
-};
+  locations: LocationType[];
+  setLocations: (locations: LocationType[]) => void;
+}
 type LocationsContextPropsType = {
   children: any;
 };
@@ -38,7 +38,7 @@ const LocationsContextDefaultValues: LocationsContextStateType = {
 const LocationsContext = createContext<LocationsContextStateType>(LocationsContextDefaultValues);
 
 export const LocationsProvider: React.FC<LocationsContextPropsType> = ({ children }) => {
-  const [locations, setLocations] = useState<locationType[]>(LocationsContextDefaultValues.locations);
+  const [locations, setLocations] = useState<LocationType[]>(LocationsContextDefaultValues.locations);
   return (
     <LocationsContext.Provider value={{
       locations,

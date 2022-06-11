@@ -11,7 +11,11 @@ export class LocationService {
   ) {}
 
   async getLocations() {
-    return await this.locationRepository.find();
+    return await this.locationRepository.find({
+      order: {
+        price: "ASC"
+      }
+    });
   }
 
   async getLocation(id: number) {
