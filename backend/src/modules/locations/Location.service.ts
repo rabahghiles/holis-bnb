@@ -22,4 +22,21 @@ export class LocationService {
     }
     return await this.locationRepository.findOne(query);
   }
+
+  async searchLocations(keyword: string) {
+    if ( keyword.length <= 0 ) return [];
+
+    return await this.locationRepository.createQueryBuilder().select()
+      .where('title ILIKE :query', {query: `%${keyword}%`})
+      .orWhere('description ILIKE :query', {query: `%${keyword}%`})
+      .orWhere('location ILIKE :query', {query: `%${keyword}%`})
+      .getMany();
+
+
+    // return await this.locationRepository.createQueryBuilder().select()
+    //   .where(`MATCH(title) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
+    //   .orWhere(`MATCH(description) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
+    //   .orWhere(`MATCH(location) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
+    //   .getMany();
+  }
 }

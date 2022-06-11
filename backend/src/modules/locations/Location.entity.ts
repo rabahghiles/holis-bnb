@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -16,12 +17,15 @@ export class Location {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Index({ fulltext: true })
   @Column()
   title: string;
 
+  @Index({ fulltext: true })
   @Column()
   description: string;
 
+  @Index({ fulltext: true })
   @Column()
   location: string;
 
