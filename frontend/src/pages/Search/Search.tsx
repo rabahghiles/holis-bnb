@@ -2,17 +2,17 @@ import React, {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import LocationsContext, { LocationType } from '../../contexes/LocationsContext';
 import SearchHeader from '../../components/SearchHeader/SearchHeader';
+import SearchBody from '../../components/SearchBody/SearchBody';
 import './Search.css';
 
 type SearchPageProps = {};
 
 const SearchPage: React.FC<SearchPageProps> = () => {
 
-  const {locations, setLocations} = useContext(LocationsContext);
+  const {locations, categories, setLocations, setCategories} = useContext(LocationsContext);
   
-  const [sortedLocations, setSortedLocations] = useState<LocationType[]>(locations);
-  const [direction, setDirection] = useState<number>(1);
-  const [orderBy, setOrderBy] = useState<number>(1);
+  const [orderBy, setOrderBy] = useState<number>(0);
+  const [price, setPrice] = useState<number>(1);
 
   // Create a function to fetch all locations from database (DONE);
   useEffect(() => {
@@ -21,58 +21,67 @@ const SearchPage: React.FC<SearchPageProps> = () => {
     .then((res) => setLocations(res.data))
     .catch((err) => console.log(err))
 
+    axios.get("http://localhost:8000/categories")
+    .then((res) => setCategories(res.data))
+    .catch((err) => console.log(err))
+
   }, [])
 
-  const onDirectionChange = (direction: number): void => {
-    setDirection(direction);
-    orderLocations();
-  }
+  // const onDirectionChange = (direction: number): void => {
+  //   setDirection(direction);
+  // }
 
-  const onOrdberByChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    setOrderBy(parseInt(e.target.value));
-    orderLocations();
-  }
+  // const onOrdberByChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+  //   const value = parseInt(e.target.value);
+  //   setOrderBy(value);
+  //   orderLocations(value, direction);
+  // }
 
-  const orderLocations = (): void => {
+  // const orderLocations = (orderBy: number, direction: number): void => {
 
-    // (orderBy)
-    // 0 => Price
-    // 1 => Nombre de chambres
-    // 2 => Nombre d'étoiles
+  //   // (orderBy)
+  //   // 0 => Price
+  //   // 1 => Nombre de chambres
+  //   // 2 => Nombre d'étoiles
 
-    // (direction)
-    // 0 => ASC
-    // 1 => DESC
+  //   // (direction)
+  //   // 0 => ASC
+  //   // 1 => DESC
 
-    let sortedLocations: LocationType[] = [...locations];
+  //   let sortedLocations: LocationType[] = [...locations];
 
-    if( orderBy === 0  && direction === 1) sortedLocations.sort((a,b) => a.price - b.price);
-    else if ( orderBy === 0 && direction === 0) sortedLocations.sort((a,b) => b.price - a.price);
-    else if ( orderBy === 1 && direction === 1) sortedLocations.sort((a,b) => a.numberOfRooms - b.numberOfRooms);
-    else if ( orderBy === 1 && direction === 0) sortedLocations.sort((a,b) => b.numberOfRooms - a.numberOfRooms);
-    else if ( orderBy === 2 && direction === 1) sortedLocations.sort((a,b) => a.stars - b.stars);
-    else if ( orderBy === 2 && direction === 0) sortedLocations.sort((a,b) => b.stars - a.stars);
+  //   if( orderBy === 0  && direction === 1) sortedLocations.sort((a,b) => a.price - b.price);
+  //   else if ( orderBy === 0 && direction === 0) sortedLocations.sort((a,b) => b.price - a.price);
+  //   else if ( orderBy === 1 && direction === 1) sortedLocations.sort((a,b) => a.numberOfRooms - b.numberOfRooms);
+  //   else if ( orderBy === 1 && direction === 0) sortedLocations.sort((a,b) => b.numberOfRooms - a.numberOfRooms);
+  //   else if ( orderBy === 2 && direction === 1) sortedLocations.sort((a,b) => a.stars - b.stars);
+  //   else if ( orderBy === 2 && direction === 0) sortedLocations.sort((a,b) => b.stars - a.stars);
 
-    setSortedLocations(sortedLocations);
+  //   setSortedLocations(sortedLocations);
 
-  }
+  // }
 
+  // const getSortedLocations = (orderBy: number, direction: number, locations: LocationType[]): void => {
 
-
-  // Create a function to sort locations by categories & by number of rooms
-
-  // Bonus: Create a search function linked to the search input in the header
+  //   console.log(orderBy, direction, locations);
+  // }
 
   return (
     <div className="search">
       <SearchHeader
         nbrLocations={locations?.length}
-        direction={direction}
-        orbderBy={orderBy}
-        onDirectionChange={onDirectionChange}
-        onOrdberByChange={onOrdberByChange}
+        orderBy={orderBy}
+        price={price}
+        setOrderBy={setOrderBy}
+        setPrice={setPrice}
       />
-      <div>
+      <SearchBody
+        locations={locations}
+        categories={categories}
+        orderBy={orderBy}
+        price={price}
+      />
+      {/* <div>
         {
           sortedLocations?.map((location: LocationType) => <div key={location.id}>
             <h2>{location.title}</h2>
@@ -80,8 +89,8 @@ const SearchPage: React.FC<SearchPageProps> = () => {
             <p>Nombre de chambres : {location.numberOfRooms}</p>
             <p>Étoiles : {location.stars}</p>
           </div>)
-        }
-      </div>
+        } */}
+      {/* </div> */}
     </div>
   );
 };

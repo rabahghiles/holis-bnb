@@ -1,31 +1,32 @@
 import React from 'react';
-import { HiArrowNarrowUp, HiArrowNarrowDown } from 'react-icons/hi';
+import { HiArrowNarrowUp } from 'react-icons/hi';
 import './SearchHeader.css';
 
 type SearchHeaderProps = {
   nbrLocations: number;
-  direction: number,
-  orbderBy: number,
-  onDirectionChange: (direction: number) => void;
-  onOrdberByChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  orderBy: number,
+  price: number,
+  setOrderBy: (orderBy: number) => void;
+  setPrice: (price: number) => void;
 }
 
-const SearchHeader: React.FC<SearchHeaderProps> = ({nbrLocations, onOrdberByChange, onDirectionChange, direction, orbderBy}) => {
+const SearchHeader: React.FC<SearchHeaderProps> = ({nbrLocations, orderBy, price, setOrderBy, setPrice}) => {
 
   return(
     <div className='search-header'>
-      <p>{`${nbrLocations} ${nbrLocations === 1 ? "location" : "locations"}`}</p>
-      <div className="search-header-orderby">
-        <select defaultValue={orbderBy} onChange={onOrdberByChange}>
-          <option value="0">Prix</option>
-          <option value="1">Nombre de chambres</option>
-          <option value="2">Nombre d'étoiles</option>
+      <div className="search-header-results">
+        <p>{`${nbrLocations} ${nbrLocations === 1 ? "location" : "locations"}`}</p>
+      </div>
+      <div className={`search-header-orderby`}>
+        <select defaultValue={orderBy} onChange={(e) => setOrderBy(parseInt(e.target.value))}>
+          <option value={0}>Categories</option>
+          <option value={1}>Rooms</option>
+          <option value={2}>Stars</option>
         </select>
-        <button onClick={() => onDirectionChange(direction ? 0 : 1)}>
-          {
-            direction ? <HiArrowNarrowUp /> : <HiArrowNarrowDown />
-          }
-        </button>
+        <div className={`search-header-price ${price ? "search-header-price-down" : ''}`}>
+          <span>Price</span>
+          <button onClick={() => setPrice(price ? 0 : 1)}><HiArrowNarrowUp /></button>
+        </div>
       </div>
     </div>
   );
