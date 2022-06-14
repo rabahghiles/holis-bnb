@@ -108,3 +108,30 @@
   background-color: #36ad91;
   border-color: #36ad91;
 }
+
+
+@media only screen and ( max-width: 1024px ) {
+  .display-location__content-header {
+    display: block;
+  }
+  .display-location__content-header h1 {
+    font-size: 26px;
+    max-width: 100%;
+    padding-right: 0px;
+    margin-bottom: 5px;
+  }
+}
+
+
+@media only screen and ( max-width: 756px ) {
+  .display-location__content-container {
+    display: block;
+    width: 90%;
+  }
+
+  .display-location__content {
+    margin-right: 0px;
+    width: 100%;
+    margin-bottom: 50px;
+  }
+}

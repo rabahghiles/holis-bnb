@@ -16,13 +16,19 @@ const SearchPage: React.FC<SearchPageProps> = () => {
 
   useEffect(() => {
 
-    axios.get("http://localhost:8000/locations")
-    .then((res) => setLocations(res.data))
-    .catch((err) => console.log(err))
+    if (!locations || locations.length <= 0 ) {
+      axios.get("http://localhost:8000/locations")
+      .then((res) => setLocations(res.data))
+      .catch((err) => console.log(err))
+    }
 
-    axios.get("http://localhost:8000/categories")
-    .then((res) => setCategories(res.data))
-    .catch((err) => console.log(err))
+    if (!categories || categories.length <= 0) {
+      axios.get("http://localhost:8000/categories")
+      .then((res) => setCategories(res.data))
+      .catch((err) => console.log(err))
+    }
+
+
 
   }, [])
 

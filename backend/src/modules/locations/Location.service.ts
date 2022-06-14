@@ -35,4 +35,28 @@ export class LocationService {
       .orWhere('location ILIKE :query', {query: `%${keyword}%`})
       .getMany();
   }
+
+  async deleteLocation(id: number) {
+    if (isNaN(id)) throw new HttpException('Type number attendu pour le parametre id', HttpStatus.BAD_REQUEST);
+    console.log("delete", id);
+    return await this.locationRepository.delete(id);
+  }
+
+  async updateLocation(id: number, price: number) {
+    if (isNaN(id)) throw new HttpException('Type number attendu pour le parametre id', HttpStatus.BAD_REQUEST);
+    if (isNaN(price)) throw new HttpException('Type number attendu pour le prix de la locations', HttpStatus.BAD_REQUEST);
+
+    await this.locationRepository
+    .createQueryBuilder()
+    .update(Location)
+    .set({ price })
+    .where("id = :id", { id })
+    .execute()
+
+    const query = {
+      where: { id },
+      relations: ["category"],
+    }
+    return await this.locationRepository.findOne(query);
+  }
 }

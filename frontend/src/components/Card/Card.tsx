@@ -21,6 +21,10 @@ const Card: React.FC<CarProps> = ({annance}) => {
     return new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 3 }).format(price);
   }
 
+  const handleClick = (id: number) => {
+    
+  }
+
   return (
     <Link to={`location/${id}`} className="card">
       <div className="img">
