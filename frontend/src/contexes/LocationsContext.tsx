@@ -1,6 +1,5 @@
 import React, { createContext, useState } from 'react';
-
-export type LocationType = {
+export interface LocationType {
   id: number;
   title: string;
   description: string;
@@ -10,7 +9,7 @@ export type LocationType = {
   numberOfRooms: number;
   price: number;
   categoryId: number;
-};
+}
 export type CategoryType = {
   id: number;
   description: string;
